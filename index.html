@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Novelas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f4f4f4;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestor de Novelas</h1>
+
+    <h2>Lista de Novelas</h2>
+    <ul id="novela-list">
+        <li></li>
+    </ul>
+
+    <h2>Agregar Nueva Novela</h2>
+    <form id="novela-form">
+        <input type="text" id="novela-input" placeholder="Nombre de la novela" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <script>
+        document.getElementById('novela-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const novelaInput = document.getElementById('novela-input');
+            const novelaName = novelaInput.value;
+
+            const novelaList = document.getElementById('novela-list');
+            const newNovelItem = document.createElement('li');
+            newNovelItem.textContent = novelaName;
+            novelaList.appendChild(newNovelItem);
+
+            novelaInput.value = '';
+        });
+    </script>
+
+</body>
+</html>

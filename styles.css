@@ -1,0 +1,76 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    transition: background-color 0.5s;
+}
+header {
+    background: #007bff;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    animation: fadeIn 2s;
+}
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+nav a:hover {
+    color: #ffcc00;
+}
+section {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    transition: transform 0.2s;
+}
+section:hover {
+    transform: translateY(-5px);
+}
+h2 {
+    color: #007bff;
+}
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background: #007bff;
+    color: white;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.action-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.action-button:hover {
+    background-color: #218838;
+}
+.novela {
+    margin: 10px 0;
+}
+.eliminar-button {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.eliminar-button:hover {
+    background-color: #c82333;
+}

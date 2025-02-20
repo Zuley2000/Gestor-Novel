@@ -3,59 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Novelas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background: #f4f4f4;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        form {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Gestión de Novelas</title>
+    <link rel="stylesheet" href="c:\Users\diana\OneDrive\Documents\Gestor-Novel\styles.css"> <!-- Vinculación del CSS -->
 </head>
 <body>
 
-    <h1>Gestor de Novelas</h1>
+<header>
+    <h1>Gestión de Novelas</h1>
+    <nav>
+        <a href="#seccion1">Inicio</a>
+        <a href="#seccion2">Novelas</a>
+        <a href="#seccion4">Contacto</a>
+        <a href="#seccion5" class="action-button">Agregar Novela</a>
+    </nav>
+</header>
 
-    <h2>Lista de Novelas</h2>
-    <ul id="novela-list">
-        <li></li>
-    </ul>
+<section id="seccion1">
+    <h2>Bienvenido a la Plataforma de Gestión de Novelas</h2>
+    <p>Una herramienta diseñada para autores y lectores, donde las novelas pueden ser gestionadas y valoradas. Descubre obras increíbles y contribuye a su éxito.</p>
+</section>
 
-    <h2>Agregar Nueva Novela</h2>
-    <form id="novela-form">
-        <input type="text" id="novela-input" placeholder="Nombre de la novela" required>
-        <button type="submit">Agregar</button>
+<section id="seccion4">
+    <h2>Contacto</h2>
+    <form>
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        <label for="email">Correo Electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="mensaje">Mensaje:</label><br>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea><br><br>
+        <input type="submit" value="Enviar">
     </form>
+</section>
 
-    <script>
-        document.getElementById('novela-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const novelaInput = document.getElementById('novela-input');
-            const novelaName = novelaInput.value;
+<section id="seccion5" class="form-section">
+    <h2>Agregar Nueva Novela</h2>
+    <form id="novelaForm">
+        <label for="titulo">Título:</label><br>
+        <input type="text" id="titulo" name="titulo" required><br><br>
+        <label for="descripcion">Descripción:</label><br>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea><br><br>
+        <label for="estatus">Estatus:</label><br>
+        <select id="estatus" name="estatus">
+            <option value="Publicada">Publicada</option>
+            <option value="En Progreso">En Progreso</option>
+            <option value="Planificada">Planificada</option>
+        </select><br><br>
+        <label for="capitulos">Capítulos:</label><br>
+        <input type="number" id="capitulos" name="capitulos" required><br><br>
+        <label for="estado">Estado de lectura:</label><br>
+        <select id="estado" name="estado">
+            <option value="Leída">Leída</option>
+            <option value="Leyendo">Leyendo</option>
+            <option value="Por Leer">Por Leer</option>
+        </select><br><br>
+        <label for="autor">Autor:</label><br>
+        <input type="text" id="autor" name="autor" required><br><br>
+        <input type="submit" value="Agregar Novela" class="action-button">
+    </form>
+</section>
 
-            const novelaList = document.getElementById('novela-list');
-            const newNovelItem = document.createElement('li');
-            newNovelItem.textContent = novelaName;
-            novelaList.appendChild(newNovelItem);
+<section id="resultado">
+    <h3>Novelas Agregadas:</h3>
+    <div id="listaNovelas"></div>
+</section>
 
-            novelaInput.value = '';
+<footer>
+    <p>&copy; 2025 Gestión de Novelas. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+    // Lista para almacenar las novelas
+    let listaNovelas = [];
+
+    // Manejo de formulario para agregar novela
+    document.getElementById('novelaForm').onsubmit = function(event) {
+        event.preventDefault();
+        const titulo = document.getElementById('titulo').value;
+        const descripcion = document.getElementById('descripcion').value;
+        const estatus = document.getElementById('estatus').value;
+        const capitulos = document.getElementById('capitulos').value;
+        const estado = document.getElementById('estado').value;
+        const autor = document.getElementById('autor').value;
+
+        const novela = { titulo, descripcion, estatus, capitulos, estado, autor };
+        listaNovelas.push(novela);
+        alert("Novela '" + titulo + "' añadida exitosamente.");
+        document.getElementById('novelaForm').reset();
+        mostrarNovelas();
+    };
+
+    // Función para mostrar las novelas agregadas
+    function mostrarNovelas() {
+        const resultadoDiv = document.getElementById("listaNovelas");
+        resultadoDiv.innerHTML = ""; // Limpiar el contenido antes de mostrar
+        listaNovelas.forEach((novela, index) => {
+            const novelaDiv = document.createElement("div");
+            novelaDiv.classList.add("novela");
+            novelaDiv.innerHTML = `
+                <strong>Título:</strong> ${novela.titulo} <br>
+                <strong>Descripción:</strong> ${novela.descripcion} <br>
+                <strong>Estatus:</strong> ${novela.estatus} <br>
+                <strong>Capítulos:</strong> ${novela.capitulos} <br>
+                <strong>Estado de lectura:</strong> ${novela.estado} <br>
+                <strong>Autor:</strong> ${novela.autor} <br>
+                <button class="eliminar-button" onclick="eliminarNovela(${index})">Eliminar</button>
+                <hr>
+            `;
+            resultadoDiv.appendChild(novelaDiv);
         });
-    </script>
+    }
+
+    // Función para eliminar una novela
+    function eliminarNovela(index) {
+        if (confirm("¿Desea eliminar esta novela?")) {
+            listaNovelas.splice(index, 1); // Eliminar novela de la lista
+            mostrarNovelas(); // Actualizar la vista
+        }
+    }
+</script>
 
 </body>
 </html>

@@ -1,0 +1,7 @@
+// pagina web
+
+https://zuley2000.github.io/Gestor-Novel/
+
+// repositorio
+
+https://github.com/Zuley2000/Gestor-Novel

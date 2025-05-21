@@ -508,11 +508,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 addNovelSection.style.display = "none";
                 if (addNovelTab) addNovelTab.style.display = "none";
             }
+            // Mostrar botón de cerrar sesión
+            if (!document.getElementById("logoutBtn")) {
+                const logoutBtn = document.createElement("button");
+                logoutBtn.id = "logoutBtn";
+                logoutBtn.className = "cta-button";
+                logoutBtn.style.marginLeft = "1rem";
+                logoutBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión`;
+                logoutBtn.onclick = () => {
+                    removeUser();
+                    alert("Sesión cerrada.");
+                    updateUIForUser();
+                };
+                userButton.parentNode.insertBefore(logoutBtn, userButton.nextSibling);
+            }
         } else {
             userButton.innerHTML = `<i class="fa-solid fa-user"></i>`;
             document.querySelectorAll(".favorite-button").forEach(btn => btn.disabled = true);
             addNovelSection.style.display = "none";
             if (addNovelTab) addNovelTab.style.display = "none";
+            // Quitar botón de cerrar sesión si existe
+            const logoutBtn = document.getElementById("logoutBtn");
+            if (logoutBtn) logoutBtn.remove();
         }
     }
 
@@ -571,4 +588,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mostrar comentarios generales al cargar la página
     displayGeneralComments();
+
+    const logoutBtnModal = document.getElementById("logoutBtnModal");
+    if (logoutBtnModal) {
+        logoutBtnModal.addEventListener("click", () => {
+            removeUser();
+            alert("Sesión cerrada.");
+            userModal.style.display = "none";
+            updateUIForUser();
+        });
+    }
 });

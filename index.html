@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novelas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Encabezado principal -->
+    <header class="main-header">
+        <h1><i class="fa-solid fa-book"></i> NOVELAS</h1>
+    </header>
+
+    <div class="main-container">
+        <!-- Navegación de pestañas -->
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="catalogSection"><i class="fa-solid fa-list"></i> Catálogo</button>
+            <button class="tab-button" data-tab="favoritesSection"><i class="fa-solid fa-heart"></i> Favoritos</button>
+            <button class="tab-button" data-tab="searchSection"><i class="fa-solid fa-search"></i> Buscar</button>
+            <button class="tab-button" data-tab="commentsSection"><i class="fa-solid fa-comments"></i> Comentarios</button>
+            <button id="exportButton" class="tab-button" title="Exportar catálogo"><i class="fa-solid fa-file-export"></i> Exportar</button>
+            <label class="tab-button" title="Importar catálogo" style="margin-bottom: 0;">
+                <i class="fa-solid fa-file-import"></i> Importar
+                <input type="file" id="importFile" accept="application/json" style="display:none;">
+            </label>
+        </nav>
+
+        <!-- Nueva sección de búsqueda -->
+        <section id="searchSection" class="tab-content">
+            <h2><i class="fa-solid fa-search"></i> Buscar Novelas</h2>
+            <form id="searchForm" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+                <input type="text" id="searchTitle" placeholder="Buscar por título" style="padding:0.5rem;border-radius:4px;border:1px solid #4da8da;">
+                <input type="text" id="searchGenre" placeholder="Buscar por género" style="padding:0.5rem;border-radius:4px;border:1px solid #4da8da;">
+                <input type="text" id="searchTags" placeholder="Buscar por etiquetas" style="padding:0.5rem;border-radius:4px;border:1px solid #4da8da;">
+                <input type="text" id="searchAuthor" placeholder="Buscar por autor" style="padding:0.5rem;border-radius:4px;border:1px solid #4da8da;">
+                <button type="submit" class="cta-button" style="padding:0.5rem 1rem;"><i class="fa-solid fa-search"></i> Buscar</button>
+                <button type="button" id="clearSearch" class="cta-button" style="padding:0.5rem 1rem;background:#888;"><i class="fa-solid fa-eraser"></i> Limpiar</button>
+            </form>
+            <ul id="searchResults" class="catalog-list"></ul>
+        </section>
+
+        <!-- Sección de catálogo -->
+        <section id="catalogSection" class="tab-content active">
+            <h2><i class="fa-solid fa-list"></i> Catálogo de Novelas</h2>
+            <ul id="catalogoList" class="catalog-list"></ul>
+        </section>
+
+        <!-- Sección de favoritos -->
+        <section id="favoritesSection" class="tab-content">
+            <h2><i class="fa-solid fa-heart"></i> Novelas Favoritas</h2>
+            <ul id="favoritesList" class="catalog-list"></ul>
+        </section>
+
+        <!-- Apartado de información de novelas en el código -->
+        <section id="infoSection" class="tab-content">
+            <h2><i class="fa-solid fa-code"></i> Información de Novelas (editable en el código)</h2>
+            <p>Para agregar o editar novelas, modifica el array <b>novelasData</b> en <b>script.js</b>.</p>
+            <pre style="background:#121a2e;color:#4da8da;padding:1em;border-radius:8px;overflow-x:auto;">
+            </pre>
+        </section>
+
+        <!-- Sección de agregar novela -->
+        <section id="addNovelSection" class="tab-content">
+            <h2><i class="fa-solid fa-plus"></i> Agregar Nueva Novela</h2>
+            <form id="addNovelForm">
+                <div class="form-group">
+                    <label for="title"><i class="fa-solid fa-heading"></i> Título:</label>
+                    <input type="text" id="title" placeholder="Título de la novela" required>
+                </div>
+                <div class="form-group">
+                    <label for="altTitle"><i class="fa-solid fa-heading"></i> Título Alternativo:</label>
+                    <input type="text" id="altTitle" placeholder="Título alternativo">
+                </div>
+                <div class="form-group">
+                    <label for="genre"><i class="fa-solid fa-tags"></i> Género:</label>
+                    <input type="text" id="genre" placeholder="Género de la novela" required>
+                </div>
+                <div class="form-group">
+                    <label for="tags"><i class="fa-solid fa-tag"></i> Etiquetas:</label>
+                    <input type="text" id="tags" placeholder="Etiquetas separadas por comas">
+                </div>
+                <div class="form-group">
+                    <label for="description"><i class="fa-solid fa-align-left"></i> Descripción:</label>
+                    <textarea id="description" placeholder="Descripción de la novela" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="link"><i class="fa-solid fa-link"></i> Enlace:</label>
+                    <input type="url" id="link" placeholder="Enlace a la novela">
+                </div>
+                <div class="form-group">
+                    <label for="status"><i class="fa-solid fa-info-circle"></i> Estado:</label>
+                    <input type="text" id="status" placeholder="Estado (Ej: En curso, Finalizado)">
+                </div>
+                <div class="form-group">
+                    <label for="chapters"><i class="fa-solid fa-book"></i> Capítulos:</label>
+                    <input type="number" id="chapters" placeholder="Número de capítulos" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating"><i class="fa-solid fa-star"></i> Calificación:</label>
+                    <input type="number" id="rating" placeholder="Calificación (1-10)" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="imageFile"><i class="fa-solid fa-image"></i> Imagen:</label>
+                    <input type="file" id="imageFile" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="pdfFile"><i class="fa-solid fa-file-pdf"></i> PDF (opcional):</label>
+                    <input type="file" id="pdfFile" accept="application/pdf">
+                </div>
+                <div class="form-group">
+                    <label for="adult"><i class="fa-solid fa-exclamation-triangle"></i> ¿Para mayores de 18 años?</label>
+                    <input type="checkbox" id="adult">
+                </div>
+                <div class="form-group">
+                    <label for="audience"><i class="fa-solid fa-exclamation-triangle"></i> Público:</label>
+                    <select id="audience" required>
+                        <option value="adult">Adulto</option>
+                        <option value="general">Apto para todo público</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button"><i class="fa-solid fa-plus"></i> Agregar Novela</button>
+            </form>
+        </section>
+
+        <!-- Nueva sección de comentarios generales -->
+        <section id="commentsSection" class="tab-content">
+            <h2><i class="fa-solid fa-comments"></i> Comentarios Generales</h2>
+            <form id="generalCommentForm" style="display:flex;flex-direction:column;gap:1rem;">
+                <textarea id="generalCommentText" placeholder="Escribe tu comentario sobre la aplicación..." style="padding:0.5rem;border-radius:4px;border:1px solid #4da8da;" required></textarea>
+                <button type="submit" class="cta-button"><i class="fa-solid fa-paper-plane"></i> Enviar Comentario</button>
+            </form>
+            <ul id="generalCommentsList" style="margin-top:1rem;list-style:none;padding:0;"></ul>
+        </section>
+    </div>
+
+    <!-- Modal de cuenta de usuario -->
+    <div id="userModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-modal" id="closeUserModal">&times;</span>
+            <h2><i class="fa-solid fa-user"></i> Cuenta de Usuario</h2>
+            <form id="userForm" style="width:100%;">
+                <div class="form-group">
+                    <label for="username"><i class="fa-solid fa-user"></i> Nombre de usuario:</label>
+                    <input type="text" id="username" required placeholder="Tu nombre de usuario">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword"><i class="fa-solid fa-lock"></i> Contraseña:</label>
+                    <input type="password" id="userpassword" required placeholder="Contraseña">
+                </div>
+                <div class="main-buttons" style="flex-direction:row;gap:1rem;justify-content:center;">
+                    <button type="button" id="registerBtn" class="cta-button"><i class="fa-solid fa-user-plus"></i> Crear cuenta</button>
+                    <button type="button" id="loginBtn" class="cta-button"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</button>
+                </div>
+            </form>
+            <button id="deleteAccount" class="cta-button" style="background:#ff4d4d;color:#fff;margin-top:1rem;">
+                <i class="fa-solid fa-trash"></i> Borrar cuenta
+            </button>
+        </div>
+    </div>
+
+    <!-- Botón de usuario flotante -->
+    <button id="userButton" class="cta-button" style="position:fixed;top:1rem;right:1rem;z-index:1000;">
+        <i class="fa-solid fa-user"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
